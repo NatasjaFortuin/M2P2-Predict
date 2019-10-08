@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1570542994453.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3136606084",
+    "id" : "7729DE1A",
+    "lastKnownWriteTime" : 1570543859,
+    "last_content_update" : 1570543859362,
+    "path" : "C:/Users/NFortuin/Desktop/Ubiqum/Modules/Module 2/M2P2 Predict/M2P2 - Predict/PredictionLog.Rmd",
+    "project_path" : "PredictionLog.Rmd",
+    "properties" : {
+        "cursorPosition" : "35,60",
+        "scrollLine" : "20",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

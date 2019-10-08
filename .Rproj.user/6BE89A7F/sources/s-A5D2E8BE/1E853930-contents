@@ -103,6 +103,8 @@ fitControl5 <- trainControl(method = "repeatedcv", number = 10, repeats = 1)
 LMFit5 <- train(SolarRad~., data = training, method = "lm", trControl=fitControl5)
 #check the results
 LMFit5
+
+#TODO
 defaultSummary(fitControl5, lev = NULL, model = NULL)
 postResample(pred, obs)
 twoClassSummary(data, lev = NULL, model = NULL)

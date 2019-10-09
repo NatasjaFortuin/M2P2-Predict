@@ -3,6 +3,8 @@
 library(mlbench)
 library(caret)
 library(readr)
+library(ggplot2)
+library(dplyr)
 
 #clean Global Environment
 rm(fitControl2)
@@ -33,3 +35,8 @@ Incom$brand_pred <- predict(object = rfFit, newdata = Incom)
 postResample(pred = Incom$brand_pred, obs = Incom$brand)
 
 summary(Incom)
+library(ggplot2)
+ggplot(data = Incom)aes(x=age, y=salary) +
+  geom_point(shape=1) + 
+  geom_smooth(method=lm) 
+       

@@ -1,12 +1,19 @@
 ---
 title: "M2P2 - Predict"
 author: "NF"
-date: "8-10-2019"
+date: "11-10-2019"
 output: html_document
-    #vier spaties zijn nodig bij Markdown om hieronder weer verder te kunnen binnen 1 commando
 ---
 
+---
+# This is a header
 
+I'm a paragraph, hi! I can do cool thinks like:
+
+* *Be in italics*
+* Be **Bold**
+* Or be ~~wrong~~
+---
 
 ---
 #Summary
@@ -14,19 +21,40 @@ output: html_document
 Investigate if customer responses to some survey questions (e.g. income, age, etc.) enable us to predict the answer to the brand preference question. If we can do this with confidence, I would like you to make those predictions and provide the sales team with a complete view of what brand our customers prefer.
 
 To do this, I would like you to run and optimize at least two different decision tree classification methods in R - C5.0 and RandomForest - and compare which one works better for this data set.
-## instructions
+
+## data sets used
 File labeled CompleteResponses.csv is the data set you will use to train your model and build your predictive model. It includes 10,000 fully-answered surveys and the key to the survey can be found in survey_key.csv . The file labeled SurveyIncomplete.csv will be your main test set (the data you will apply your optimized model to predict the brand preference). You'll be applying your trained and tested model to this data to prepare the model for production.
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+#Preprocessing of data
+While importing file with function "Import Dataset" columns "elevel", "cars", "zipcodes" and "brand" were converted to factor. "brand" and "zipcode" within the wizard and "cars" and "elevel" using the as.factor function
+
+```{r, include=FALSE}
+CompleteResponses$car <- as.factor(CompleteResponses$car)
+CompleteResponses$elevel <- as.factor(CompleteResponses$elevel)
 ```
+
+Furthermore the data is checked for missing values and renamed to create a working file.
+```{r, include=FALSE}
+is.na(CompleteResponses)
+ComResp <- CompleteResponses
+sum(is.na(ComResp))
+View(ComResp)
+```
+Consequently the working data file views as follows and has 9898 rows.
+```{r}
+exampledata <- read.csv("C:/Users/NFortuin/Desktop/Ubiqum/Modules/Module 2/M2P2 Predict/M2P2 - Predict/CompleteResponses.csv")
+head(exampledata)
+summary(exampledata)
+nrow(exampledata)
+```
+
+
+
 ## Including Plots
 
 You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r name of plot, echo=FALSE}
+plot(name of plot)
 ```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

@@ -46,7 +46,7 @@ head(CompleteResponses)
 dfnew <- CompleteResponses[,c(1,2,7)]
 ComResp <- dfnew
 
-#1st MODEL AUTOM GRID C5.0----
+#C50 rfFit MODEL AUTOM GRID----
 
 set.seed(7)
 
@@ -71,10 +71,12 @@ rfFit <- train(brand~.,
 #training results
 rfFit
 
-#2nd MODEL AUTOM GRID rpartScore----
+#KNN MODEL rfFit2 AUTOM GRID----
 #caret model - Automatic Tuning Grid
 #dataframe = CompleteResponses (ComResp)
 #Y Value = brand
+
+getModelInfo("rf")
 
 set.seed(7)
 #SET SPLIT 75%/25% for train/test in the dataset
@@ -83,32 +85,64 @@ training2 <- ComResp[inTraining,]
 testing2 <- ComResp[-inTraining,]
 #10 fold cross validation
 fitControl2 <- trainControl(method = "repeatedcv", number = 10, repeats = 1)
-#train Linear Regression model with a tuneLenght = `2`1 (trains with 1 mtry values for rpartScore)
+#train knn model with a tuneLenght = `1`(trains with 1 mtry values for knn)
 rfFit2 <- train(brand~., 
                 data = training, 
-                method = "rpartScore", 
+                method = "kknn", 
                 trControl=fitControl, 
                 tuneLength = 1,
                 preProcess=c("center", "scale"))
 #training results
 rfFit2
 
-#defaultSummary(fitControl5, lev = NULL, model = NULL)
+#RF MODEL rfFit3 AUTOM GRID----
+#caret model - Automatic Tuning Grid
+#dataframe = CompleteResponses (ComResp)
+#Y Value = brand
+
+set.seed(7)
+#SET SPLIT 75%/25% for train/test in the dataset
+inTraining3 <- createDataPartition(ComResp$brand, p = .75, list = FALSE)
+training3 <- ComResp[inTraining,]
+testing3 <- ComResp[-inTraining,]
+#10 fold cross validation
+fitControl3 <- trainControl(method = "repeatedcv", number = 10, repeats = 1)
+#train rf model with a tuneLenght = `1`(trains with 1 mtry values for rf)
+rfFit3 <- train(brand~., 
+                data = training, 
+                method = "rf", 
+                trControl=fitControl, 
+                tuneLength = 1,
+                preProcess=c("center", "scale"))
+#training results
+rfFit3
+
+#ADABOOST dec tree Model rfFit4 AUTOM GRID----
+#caret model - Automatic Tuning Grid
+#dataframe = CompleteResponses (ComResp)
+#Y Value = brand
+
+set.seed(7)
+#SET SPLIT 75%/25% for train/test in the dataset
+inTraining4 <- createDataPartition(ComResp$brand, p = .75, list = FALSE)
+training4 <- ComResp[inTraining,]
+testing4 <- ComResp[-inTraining,]
+#10 fold cross validation
+fitControl4 <- trainControl(method = "repeatedcv", number = 10, repeats = 1)
+#train rf model with a tuneLenght = `1`(trains with 1 mtry values for rf)
+rfFit4 <- train(brand~., 
+                data = training, 
+                method = "adaboost",
+                trControl=fitControl, 
+                tuneLength = 1,
+                preProcess=c("center", "scale"))
+#training results
+rfFit4
 
 #POSTRESAMPLE(pred, obs)----
 postResample(pred = predict(object = rfFit2, newdata = testing2), obs = testing2$brand)
 ##output = Accuracy     Kappa 
-##rfFit2 = 0.6172345 0.0000000 
+##rfFit2 = 0.9180660 0.8262386 
 postResample(pred = predict(object = rfFit, newdata = testing), obs = testing$brand)
 ##output = Accuracy     Kappa 
 ##rfFit 0.9098196 0.8104663 
-
-#PREDICT---- 
-predict(object = rfFit, newdata = testing)
-
-#twoClassSummary(data, lev = NULL, model = NULL)
-twoClassSummary(rfFit, lev = NULL, model = NULL)
-
-#mnLogLoss(data, lev = NULL, model = NULL)
-#multiClassSummary(data, lev = NULL, model = NULL)
-#prSummary(data, lev = NULL, model = NULL)

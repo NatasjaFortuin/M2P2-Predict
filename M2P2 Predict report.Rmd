@@ -53,8 +53,16 @@ nrow(exampledata)
 
 ## Including Plots
 
+
+```{r}
+CompleteResponses <- read.csv("CompleteResponses.csv")
+library(ggplot2)
+```
+
+
 You can also embed plots, for example:
 
 ```{r name of plot, echo=FALSE}
-plot(name of plot)
+ggplot(data = CompleteResponses) +
+  geom_point(aes(x = age, y = salary, col = brand))
 ```

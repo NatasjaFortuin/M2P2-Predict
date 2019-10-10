@@ -310,4 +310,7 @@
  #...~.TOTI dot----
  #I want to model .... as a function of everyting else in the dataset
  
- 
+ #CENTER, SCALE----
+ #center,scale is feitelijk een normalization opdracht als je waarden een grote range hebben
+ #zoals de age en salary waarden in Blackwell M2P2 opdracht. Door in het train model als laatste
+ #regel center,scale op te nemen normaliseer je de waarden tussen 0 en 1 en maak je ze vergelijkbaar

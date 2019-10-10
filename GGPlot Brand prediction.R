@@ -1,24 +1,38 @@
 library(ggplot2)
+library(readr)
+NewIncom <- Incom
+View(NewIncom)
 
-ggplot(dat, aes(x=xvar, y=yvar)) +
-  geom_point(shape=1) +    # Use hollow circles
-  geom_smooth(method=lm)   # Add linear regression line 
-#  (by default includes 95% confidence region)
+qplot(data=NewIncom, x=age, y=salary,geom = "point")
+ggsave("plotagevssalary.png", width = 5, height = 5)
+qplot(data=NewIncom, x=zipcode, y=brand_pred,geom = "point")
+ggsave("plotzipvsbrand_pred.png", width = 5, height = 5)
+qplot(data=NewIncom, x=elevel, y=brand_pred,geom = "point")
+ggsave("plotelevelvsbrand_pred.png", width = 5, height = 5)
+qplot(data=NewIncom, x=car, y=brand_pred,geom = "point")
+ggsave("plotcarvsbrand_pred.png", width = 5, height = 5)
 
-ggplot(data = Incom) +
-  geom_point(aes(x = age, y = salary))
+ggplot(data = NewIncom) +
+  geom_point(aes(x = age, y = salary, col = brand_pred))
+ggsave("plotagevssalary_col_brand_pred.png", width = 5, height = 5)
+
+ggplot(data = NewIncom) +
+  geom_point(aes(x = age, y = salary, col = brand_pred))
+ggsave("plotagevssalary_col_brand_pred.png", width = 5, height = 5)
 
 ggplot(Incom) +
-  geom_violin(aes(x = age, y = salary))
+  geom_violin(aes(x = age, y = salary, col = brand_pred))
+ggsave("plot_Violin_agevssalary_brand_pred.png", width = 5, height = 5)
 
-ggplot(data = Incom) +
-  geom_point(
-    aes(x = age, y = salary, color = cut)) +
-  scale_color_brewer(palette = "Set1") +
-  theme_bw(10)
+ggplot(Incom, aes(factor(brand_pred))) + 
+         geom_bar(fill="white", colour = "red")
+ggsave("barplotbrand_pred.png", width = 5, height = 5) 
 
-ggplot(data = Incom) +
-  geom_point(
-    aes(x = age, y = salary, color = cut)) +
-  scale_color_manual(
-    values = c("orange", "yellow", "red", "green"))
+ggplot(Incom, aes(x = factor(brand_pred), fill = elevel)) + 
+  geom_bar() +
+ggsave("barplotbrand_pred+fillelevel.png", width = 5, height = 5)
+
+ggplot(Incom, aes(x = factor(brand_pred), fill = elevel)) + 
+  geom_bar() +
+  facet_wrap(~ zipcode)
+ggsave("barplotbrand_pred+fillelevel_facetwrapzipcode.png", width = 5, height = 5)

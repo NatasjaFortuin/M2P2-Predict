@@ -18,12 +18,12 @@ I'm a paragraph, hi! I can do cool thinks like:
 ---
 #Summary
 ## assignment
-Investigate if customer responses to some survey questions (e.g. income, age, etc.) enable us to predict the answer to the brand preference question. If we can do this with confidence, I would like you to make those predictions and provide the sales team with a complete view of what brand our customers prefer.
+Investigate if *customer responses* to some survey questions (e.g. income, age, etc.) enable us to predict the answer to the brand preference question. If we can do this with confidence, I would like you to make those predictions and provide the sales team with a complete view of **what brand our customers prefer**.
 
-To do this, I would like you to run and optimize at least two different decision tree classification methods in R - C5.0 and RandomForest - and compare which one works better for this data set.
+To do this, I would like you to run and optimize at least two different decision tree classification methods in R - **C5.0** and RandomForest - and compare which one works better for this data set.
 
 ## data sets used
-File labeled CompleteResponses.csv is the data set you will use to train your model and build your predictive model. It includes 10,000 fully-answered surveys and the key to the survey can be found in survey_key.csv . The file labeled SurveyIncomplete.csv will be your main test set (the data you will apply your optimized model to predict the brand preference). You'll be applying your trained and tested model to this data to prepare the model for production.
+File labeled CompleteResponses.csv is the data set used to train the model and to build a predictive model. It includes 10,000 fully-answered surveys and the key to the survey can be found in survey_key.csv . The file labeled SurveyIncomplete.csv will be your main test set (the data you will apply your optimized model to predict the brand preference). You'll be applying your trained and tested model to this data to prepare the model for production.
 ---
 
 #Preprocessing of data
@@ -43,6 +43,7 @@ View(ComResp)
 ```
 Consequently the working data file views as follows and has 9898 rows.
 ```{r}
+library(readr)
 exampledata <- read.csv("C:/Users/NFortuin/Desktop/Ubiqum/Modules/Module 2/M2P2 Predict/M2P2 - Predict/CompleteResponses.csv")
 head(exampledata)
 summary(exampledata)
@@ -55,14 +56,20 @@ nrow(exampledata)
 
 
 ```{r}
-CompleteResponses <- read.csv("CompleteResponses.csv")
 library(ggplot2)
+#Original data scatterplot----
+ggplot(data = CompleteResponses) +
+  geom_point(aes(x = age, y = salary, col = brand))
+  labs(title = "Scatterplot complete data", subtitle = "brandpreference per age group")
+ggsave("plotagevssalary_col_brand.png", width = 5, height = 5)
 ```
 
 
-You can also embed plots, for example:
+Scatterplot of predicted data
 
-```{r name of plot, echo=FALSE}
-ggplot(data = CompleteResponses) +
-  geom_point(aes(x = age, y = salary, col = brand))
+```{r}
+ggplot(data = NewIncom) +
+  geom_point(aes(x = age, y = salary, col = brand_pred))
+labs(title = "Scatterplot predicted data", subtitle = "brandpreference per age group")
+ggsave("plotagevssalary_col_brand_pred.png", width = 5, height = 5)
 ```

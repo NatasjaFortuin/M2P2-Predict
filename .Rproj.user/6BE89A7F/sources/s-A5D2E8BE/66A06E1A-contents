@@ -1,9 +1,0 @@
-#Loading caret package
-library("caret")
-load(WholeYear)
-
-#Loading training data
-trainnfwy<-data(WholeYears,stringsAsFactors = T)
-
-#Looking at the structure of caret package.
-str(train)

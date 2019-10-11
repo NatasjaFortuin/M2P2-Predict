@@ -33,6 +33,7 @@ Incom$brand_pred <- predict(object = rfFit, newdata = Incom)
 
 #Postpresample---- CHECK KPI'S of new column
 postResample(pred = Incom$brand_pred, obs = Incom$brand)
+readRDS(Incom$brand)
 
 #PREDICT KNN---- ADDS NEW COLUMN WITH PRED
 Incom$brand_predKNN <- predict(object = rfFit2, newdata = Incom)

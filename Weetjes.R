@@ -314,3 +314,19 @@
  #center,scale is feitelijk een normalization opdracht als je waarden een grote range hebben
  #zoals de age en salary waarden in Blackwell M2P2 opdracht. Door in het train model als laatste
  #regel center,scale op te nemen normaliseer je de waarden tussen 0 en 1 en maak je ze vergelijkbaar
+
+ #SAVE AS .RDS----
+ #saveRDS(ModelName, file = "rfFit.rds")
+ #Dit bestandje kun je vervolgens in Markdown zetten als referentie;
+ # model <- readRDS("rfFit.rds")
+ 
+#MARKDOWN----
+ #laad eerst alle packages en data die je hebt gebruikt
+ #sla modellen op met .rds
+ #en bouw dan je rapport op
+ 
+ #KABLEMARKDOWN----
+ #library kableExtra
+ #als je een dataframe in je rapport wilt opnemen gebruik dan dit script
+# kable(head(exampledata)) %>% 
+#   +   kable_styling()

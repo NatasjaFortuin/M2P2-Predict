@@ -5,6 +5,8 @@ library(caret)
 library(readr)
 install.packages(C50)
 
+rm(CompleteResponses)
+
 # LOAD DATA ---------------------------------------------------------------
 CompleteResponses <- read_csv(
   "CompleteResponses.csv",
@@ -15,6 +17,9 @@ CompleteResponses <- read_csv(
   )
 
 #PREPROCESSING completeresponse data----
+
+ComResp
+View(ComResp)
 
 # transform to factor
 CompleteResponses$car <- as.factor(CompleteResponses$car)
@@ -29,15 +34,31 @@ View(ComResp)
 #RANK BY IMPORTANCE OF ATTRIBUTES/FEATURES----
 
 set.seed(7)
+# load the library
+library(mlbench)
+library(caret)
+
+# load the dataset
+ComResp
 
 # prepare training scheme
-control <- trainControl(method="repeatedcv", number=10, repeats=3)
+control <- trainControl(method="repeatedcv", number=10, repeats=1)
+
 # train the model
-model <- train(brand~., data=ComResp, method="lvq", preProcess="scale", trControl=control)
+RankImp <- train(brand~., 
+               data=CompleteResponses, 
+               method="rf", # 4,
+               preProcess="center", 
+               trControl=control)
+print(RankImp)
+saveRDS(object = RankImp, file = "RankImp.rds")
+
 # estimate variable importance
 importance <- varImp(model, scale=FALSE)
+
 # summarize importance
 print(importance)
+
 # plot importance
 plot(importance)
 
@@ -60,7 +81,7 @@ testing <- ComResp[-inTraining,]
 
 #10 fold cross validation
 fitControl <- trainControl(method = "repeatedcv", number = 10, repeats = 1)
-#train C5.0 model with a tuneLenght = 1 (trains with 1 mtry value for C5.0)
+#train C5.0 model with a tuneLenght = 2 (trains with 1 mtry value for C5.0)
 
 rfFit <- train(brand~., 
                       data = training, 
@@ -70,6 +91,7 @@ rfFit <- train(brand~.,
                       preProcess=c("center", "scale"))
 #training results
 rfFit
+saveRDS(Model, file = "rfFit.rds")
 
 #KNN MODEL rfFit2 AUTOM GRID----
 #caret model - Automatic Tuning Grid
@@ -94,6 +116,7 @@ rfFit2 <- train(brand~.,
                 preProcess=c("center", "scale"))
 #training results
 rfFit2
+saveRDS(object = rfFit2, file = "rfFit2.rds")
 
 #RF MODEL rfFit3 AUTOM GRID----
 #caret model - Automatic Tuning Grid
@@ -116,6 +139,7 @@ rfFit3 <- train(brand~.,
                 preProcess=c("center", "scale"))
 #training results
 rfFit3
+saveRDS(object = rfFit3, file = "rfFit3.rds")
 
 #ADABOOST dec tree Model rfFit4 AUTOM GRID----
 #caret model - Automatic Tuning Grid
@@ -138,6 +162,7 @@ rfFit4 <- train(brand~.,
                 preProcess=c("center", "scale"))
 #training results
 rfFit4
+saveRDS(object = rfFit4, file = "rfFit4.rds")
 
 #POSTRESAMPLE(pred, obs)----
 postResample(pred = predict(object = rfFit2, newdata = testing2), obs = testing2$brand)
@@ -146,3 +171,13 @@ postResample(pred = predict(object = rfFit2, newdata = testing2), obs = testing2
 postResample(pred = predict(object = rfFit, newdata = testing), obs = testing$brand)
 ##output = Accuracy     Kappa 
 ##rfFit 0.9098196 0.8104663 
+
+#PREDICT---- 
+predict(object = rfFit, newdata = testing)
+
+#twoClassSummary(data, lev = NULL, model = NULL)
+twoClassSummary(rfFit, lev = 2(rfFit$brand) )
+
+#mnLogLoss(data, lev = NULL, model = NULL)
+#multiClassSummary(data, lev = NULL, model = NULL)
+#prSummary(data, lev = NULL, model = NULL)

@@ -6,16 +6,26 @@ set.seed(7)
 # load the library
 library(mlbench)
 library(caret)
+
 # load the dataset
-data(datafile)
+data(ComResp)
+
 # prepare training scheme
-control <- trainControl(method="repeatedcv", number=10, repeats=3)
+control <- trainControl(method="repeatedcv", number=10, repeats=1)
+
 # train the model
-model <- train(diabetes~., data=nameofdata, method="lvq", preProcess="scale", trControl=control)
+model <- train(brand~., 
+               data=ComResp, 
+               method="rf", # 4,
+               preProcess="center", 
+               trControl=control)
+
 # estimate variable importance
 importance <- varImp(model, scale=FALSE)
+
 # summarize importance
 print(importance)
+
 # plot importance
 plot(importance)
 
